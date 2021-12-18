@@ -31,4 +31,4 @@ maintainers:
 # a dependency of application charts to inject those utilities and functions into the rendering
 # pipeline. Library charts do not define any templates and therefore cannot be deployed.
 type: application
-kubeVersion: '>=v1.19.0-0'
+kubeVersion: '>=v1.20.0-0'
