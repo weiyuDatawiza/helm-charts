@@ -31,8 +31,8 @@ spec:
               value: {{ .Values.PROVISIONING_KEY}}
             - name: PROVISIONING_SECRET
               value: {{ .Values.PROVISIONING_SECRET}}
-        imagePullSecrets:
-          - name: {{ .Values.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
