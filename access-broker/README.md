@@ -1,10 +1,10 @@
-# Access Broker Helm Chart
+# Access Proxy Helm Chart
 
-* Installs the Identity Aware proxy [Access Broker](https://www.datawiza.com/access-broker)
+* Installs the Identity Aware proxy [Access Proxy](https://www.datawiza.com/access-broker)
 
 ## Get Repo Info
 
-```console
+```sh
 helm repo add datawiza https://datawiza-inc.github.io/helm-charts/
 helm repo update
 ```
@@ -56,7 +56,7 @@ ingress:
   className: ''
   enabled: true
   hosts:
-    - host: accessbroke.my.com
+    - host: access-proxy.myhost.com
       paths:
         - path: /
           pathType: Prefix
