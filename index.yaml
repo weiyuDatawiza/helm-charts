@@ -20,7 +20,7 @@ entries:
     name: access-broker
     type: application
     urls:
-    - https://weiyudatawiza.github.io/helm-charts/access-broker-0.1.1.tgz
+    - https://weiyudatawiza.github.io/helm-charts/access-broker/access-broker-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v2
     appVersion: 1.6.4
