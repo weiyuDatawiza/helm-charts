@@ -2,4 +2,4 @@ remote: origin
 chart-dirs:
   - ./
 target-branch: main
-helm-extra-args: '--set imagePullSecrets=cred --set PROVISIONING_KEY=${{ secrets.PROVISIONING_KEY }} --set PROVISIONING_SECRET=${{ secrets.PROVISIONING_SECRET }}'
+helm-extra-args: '--set imagePullSecrets=cred --set PROVISIONING_KEY=DUT1OIBNAMNLJGDQMP3U561RMP --set PROVISIONING_SECRET=ETSBQ1DAN2BJ12E2REBMVIT1VR'
