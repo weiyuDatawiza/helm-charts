@@ -41,5 +41,6 @@ jobs:
       - name: Run chart-testing (install)
         run: |
           docker login registry.gitlab.com -u datawiza-deploy-token -p ${{ secrets.repo_token }}
-          kubectl create secret generic cred --from-file=.dockerconfigjson=$HOME/.docker/config.json --type=kubernetes.io/dockerconfigjson
+          kubectl create ns test
+          kubectl create secret generic cred --from-file=.dockerconfigjson=$HOME/.docker/config.json --type=kubernetes.io/dockerconfigjson -n test
           ct install --config ct.yaml
