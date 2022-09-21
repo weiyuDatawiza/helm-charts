@@ -40,7 +40,12 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
+          sed -i "s/test_provisioning_key/$PROVISIONING_KEY/g" access-broker/ci/basic-values.yaml
+          sed -i "s/test_provisioning_secret/$PROVISIONING_SECRET/g" access-broker/ci/basic-values.yaml
           docker login registry.gitlab.com -u datawiza-deploy-token -p ${{ secrets.repo_token }}
           kubectl create ns test
           kubectl create secret generic cred --from-file=.dockerconfigjson=$HOME/.docker/config.json --type=kubernetes.io/dockerconfigjson -n test
           ct install --config ct.yaml --namespace test
+        env:
+          PROVISIONING_KEY: ${{ secrets.PROVISIONING_KEY }}
+          PROVISIONING_SECRET: ${{ secrets.PROVISIONING_SECRET }}
