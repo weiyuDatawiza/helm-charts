@@ -19,6 +19,7 @@ fullnameOverride: ""
 service:
   type: ClusterIP
   port: 9772
+  targetPort: 9772
   annotations: {}
 
 ingress:
