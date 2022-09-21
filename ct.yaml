@@ -2,4 +2,4 @@ remote: origin
 chart-dirs:
   - ./
 target-branch: main
-helm-extra-set-args: .spec.imagePullSecrets[0].name=cred
+helm-extra-set-args: imagePullSecrets=cred
