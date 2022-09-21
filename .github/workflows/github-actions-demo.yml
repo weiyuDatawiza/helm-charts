@@ -1,20 +1,42 @@
-name: GitHub Actions Demo
+name: Lint and Test Charts
+
 on: [push]
+
 jobs:
-  Explore-GitHub-Actions:
+  lint-test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-      - name: Helm Chart Testing
-        uses: helm/chart-testing-action@v2.3.0
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.9.2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.2.1
+
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        run: |
+          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
+          if [[ -n "$changed" ]]; then
+            echo "::set-output name=changed::true"
+          fi
+
+      - name: Run chart-testing (lint)
+        run: ct lint --target-branch ${{ github.event.repository.default_branch }}
+
+      - name: Create kind cluster
+        uses: helm/kind-action@v1.2.0
+        if: steps.list-changed.outputs.changed == 'true'
+
+      - name: Run chart-testing (install)
+        run: ct install
