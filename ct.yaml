@@ -3,4 +3,3 @@ chart-dirs:
   - ./
 target-branch: main
 helm-extra-set-args: .spec.imagePullSecrets[0].name=cred
-namespace: test
