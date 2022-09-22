@@ -3,12 +3,12 @@ name: access-broker
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.2
+version: 0.1.3
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "1.7.11"
+appVersion: "1.7.12"
 description: A distributed, lightweight, container-based Identity Aware proxy deployed close to your application via the sidecar or standalone mode.
 home: https://www.datawiza.com
 icon: https://uploads-ssl.webflow.com/5ecaec8e686e9a5d06f5face/5ecaec8e686e9a4275f5fb05_logo.svg
