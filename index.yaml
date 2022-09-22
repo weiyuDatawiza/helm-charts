@@ -24,6 +24,27 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: 1.7.11
+    created: "2022-09-22T14:57:11.890019386Z"
+    description: A distributed, lightweight, container-based Identity Aware proxy
+      deployed close to your application via the sidecar or standalone mode.
+    digest: 3a08e4d9b98aa08507fa1c9c2105a4e2ad2f00836f32b041a81f483c52fd4870
+    home: https://www.datawiza.com
+    icon: https://uploads-ssl.webflow.com/5ecaec8e686e9a5d06f5face/5ecaec8e686e9a4275f5fb05_logo.svg
+    keywords:
+    - AMaaS
+    - Identity Aware proxy
+    - Zero Trust
+    - Datawiza
+    maintainers:
+    - email: weiyu@datawiza.com
+      name: weiyu
+    name: access-broker
+    type: application
+    urls:
+    - https://github.com/weiyuDatawiza/helm-charts/releases/download/access-broker-0.1.2/access-broker-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.7.11
     created: "2022-09-19T17:44:13.023773+08:00"
     description: A distributed, lightweight, container-based Identity Aware proxy
       deployed close to your application via the sidecar or standalone mode.
@@ -64,4 +85,4 @@ entries:
     urls:
     - https://datawiza-inc.github.io/helm-charts/access-broker/access-broker-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-22T14:45:11.774714349Z"
+generated: "2022-09-22T14:57:11.890030986Z"
