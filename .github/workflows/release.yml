@@ -32,6 +32,5 @@ jobs:
         uses: helm/chart-releaser-action@v1.4.0
         with:
           charts_dir: ./
-          charts_repo_url: https://datawiza-inc.github.io/helm-charts/
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
