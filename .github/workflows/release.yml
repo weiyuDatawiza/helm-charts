@@ -3,7 +3,7 @@ name: Release Charts
 on:
   push:
     branches:
-      - weiyuDatawiza-patch-1
+      - main
 
 jobs:
   release:
