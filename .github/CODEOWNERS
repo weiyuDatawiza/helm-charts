@@ -1,8 +1,6 @@
 # ref: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
 # https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners#codeowners-syntax
 
-# These owners will be the default owners for everything in
-# the repo. Unless a later match takes precedence,
-# @AlexGaoDW and @cjddww will be requested for
-# review when someone opens a pull request.
+# These owners will be the default owners for everything in the repo.
+# Unless a later match takes precedence, @AlexGaoDW and @cjddww will be requested for review when someone opens a pull request.
 *       @AlexGaoDW @cjddww
