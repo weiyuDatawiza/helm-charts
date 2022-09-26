@@ -1,6 +1,10 @@
 name: Lint and Test Charts
 
-on: pull_request_target
+on:
+    pull_request:
+        types: [opened, synchronize, reopened, ready_for_review]
+    pull_request_target:
+        types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
   lint-test:
