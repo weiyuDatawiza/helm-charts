@@ -24,10 +24,10 @@ containerPort: replace-with-your-app-listen-port
 imagePullSecrets: replace-with-you-secret
 ```
 
-To install the chart with the release name `my-release`:
+To install the chart with the release name `my-release` in the namespace `my-namespace`:
 
 ```console
-helm install my-release -f example.yaml datawiza/access-broker
+helm install my-release -f example.yaml datawiza/access-broker -n my-namespace
 ```
 
 ## Uninstalling the Chart
@@ -40,29 +40,93 @@ helm delete my-release
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
-### Example ingress with path
+## Note
+
+The DAP uses a Cookie to track user sessions and will store the session data on the `Server Side` (default) or the `Client Side`. In the k8s cluster, you need to add the sticky session config if you use the `Server Side` cookie. Or you need to change the `Session Option` (`Application` -> `Advanced` -> `Advanced Options`) in DCMC to `Client Side`.
+
+## Examples
+
+### Example with ingress
+
+A very basic example using ingress is like this:
 
 ```yaml
 PROVISIONING_KEY: replace-with-your-provisioning-key
 PROVISIONING_SECRET: replace-with-your-provisioning-key
-containerPort: 9772
+containerPort: replace-with-your-listen-port
 imagePullSecrets: replace-with-you-secret
 service:
   type: ClusterIP
   port: 9772
 ingress:
   annotations:
-    kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.class: replace-with-your-ingress-class
   className: ''
   enabled: true
   hosts:
-    - host: access-proxy.myhost.com
+    - host: replace-with-your-public-domain
       paths:
         - path: /
           pathType: Prefix
-          backend:
-            service:
-              name: replace-with-you-svc
-              port:
-                number: 9772
 ```
+
+#### AWS Load Balancer Controller
+
+Follow the [Installation Guide](https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/deploy/installation/) to install the AWS Load Balancer Controller.
+
+##### Sticky Session
+
+Add needed annotations in the ingress block in DAP helm value.yaml file:
+
+```yaml
+  ...
+  annotations:
+    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.lb_cookie.duration_seconds=60
+    alb.ingress.kubernetes.io/target-type: ip
+  ...
+```
+
+You can go to [AWS doc](https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/ingress/annotations/#target-group-attributes) to see more details.
+
+##### TLS Termination
+
+Add the `alb.ingress.kubernetes.io/certificate-arn: replace-with-your-cert-arn` in the ingress annotations. You can see more details [here](https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/ingress/annotations/#ssl).
+
+And in DCMC, you need to disable the SSL config.
+
+#### Nginx Ingress Controller
+
+Follow the [Installation Guide](https://kubernetes.github.io/ingress-nginx/deploy/) to install the Nginx Ingress Controller.
+
+##### Sticky Session
+
+Add needed annotations in the ingress block in DAP helm value.yaml file:
+
+```yaml
+  ...
+  annotations:
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+  ...
+```
+
+Meanwhile, Nginx Ingress Controller provides more customized configurations for the sticky session. You can see more details [here](https://kubernetes.github.io/ingress-nginx/examples/affinity/cookie/).
+
+##### TLS Termination
+
+Create the TLS secret based on your cert and key:
+
+```sh
+kubectl create secret tls tls-secret --key you-key --cert your-cert  -n your-namespace
+
+```
+
+Add TLS block in ingress config:
+
+```yaml
+  tls:
+    - hosts:
+        - your-public-domain
+      secretName: tls-secret
+```
+
+And likewise, you need to disable the SSL config in DCMC.
