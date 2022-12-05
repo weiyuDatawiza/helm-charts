@@ -57,7 +57,7 @@ containerPort: replace-with-your-listen-port
 imagePullSecrets: replace-with-you-secret
 service:
   type: ClusterIP
-  port: 9772
+  port: replace-with-your-listen-port
 ingress:
   annotations:
     kubernetes.io/ingress.class: replace-with-your-ingress-class
@@ -123,10 +123,12 @@ kubectl create secret tls tls-secret --key you-key --cert your-cert  -n your-nam
 Add TLS block in ingress config:
 
 ```yaml
+  ...
   tls:
     - hosts:
         - your-public-domain
       secretName: tls-secret
+  ...
 ```
 
 And likewise, you need to disable the SSL config in DCMC.
