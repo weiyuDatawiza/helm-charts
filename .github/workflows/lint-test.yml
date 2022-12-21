@@ -1,8 +1,6 @@
 name: Lint and Test Charts
 
 on:
-    pull_request:
-        types: [opened, synchronize, reopened, ready_for_review]
     pull_request_target:
         types: [opened, synchronize, reopened, ready_for_review]
 
@@ -46,10 +44,11 @@ jobs:
         run: |
           sed -i "s/test_provisioning_key/$PROVISIONING_KEY/g" access-broker/ci/basic-values.yaml
           sed -i "s/test_provisioning_secret/$PROVISIONING_SECRET/g" access-broker/ci/basic-values.yaml
-          docker login registry.gitlab.com -u datawiza-deploy-token -p ${{ secrets.repo_token }}
+          docker login registry.gitlab.com -u datawiza-deploy-token -p $DATAWIZA_REPO_LOGIN_TOKEN
           kubectl create ns test
           kubectl create secret generic cred --from-file=.dockerconfigjson=$HOME/.docker/config.json --type=kubernetes.io/dockerconfigjson -n test
           ct install --config ct.yaml --namespace test
         env:
           PROVISIONING_KEY: ${{ secrets.PROVISIONING_KEY }}
           PROVISIONING_SECRET: ${{ secrets.PROVISIONING_SECRET }}
+          DATAWIZA_REPO_LOGIN_TOKEN: ${{ secrets.repo_token }}
